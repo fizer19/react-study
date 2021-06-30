@@ -1,0 +1,14 @@
+.a {
+    width: 500px;
+    background-color: gray;
+    padding: 10px;
+}
+.b {
+    width: 100%;
+    background-color: orange;
+    padding: 10px;
+}
+.c {
+    width: 100%;
+    background-color: pink;
+}

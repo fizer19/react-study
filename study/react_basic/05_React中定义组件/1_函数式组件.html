@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        function MyComponent() {
+            console.log(this); // undifined, 因为babl翻译后开启了严格模式，严格模式下不允许自定义函数里的this指向window
+            return <h2>测试</h2>
+        }
+
+        ReactDOM.render(<MyComponent/>, document.getElementById('test'))
+        /* 
+            1.React解析组件标签，找到MyComponent组件
+            2.发现组件时使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中
+        */
+    </script>
+    
+</body>
+</html>

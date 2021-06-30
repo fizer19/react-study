@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ref回调调用次数</title>
+</head>
+
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/babel">
+        class Demo extends React.Component {
+            state = { isHot: false }
+            showData = () => {
+                console.log('click', this);
+                alert(this.input1.value)
+            }
+            changeWeather = () => {
+                const { isHot } = this.state;
+                this.setState({ isHot: !isHot })
+            }
+            saveInput = (c) => {
+                this.input1 = c;
+                console.log("@",c);
+            }
+            render() {
+                const { isHot } = this.state
+
+                return (
+                    <div>
+                        <h2>今天天气很{isHot ? '炎热' : '凉爽'}</h2>
+
+                        {/*
+                            //回调函数写成内联形式，当更新状态时，内联函数调用两次，第一次currentNode为null，确保清空上一个函数，第二次为当前节点
+                            通过将回调函数定义成clsaa的绑定函数可以避免这个问题
+                        <input ref={(c) => {this.input1 = currentNode, console.log('@', c);}} type="text" />*/
+                        }
+                        <input ref={this.saveInput} type="text"/>
+                        <button onClick={this.showData}>点我提示左侧数据</button>
+                        <button onClick={this.changeWeather}>点击切换天气</button>
+                    </div>
+                )
+            }
+
+        }
+        ReactDOM.render(<Demo />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

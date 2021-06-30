@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello react</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            render() {
+                console.log('render中this', this);//this指MyComponent组件实例对象
+                return <h2>我是用类定义的组件</h2>
+            }
+        }
+        ReactDOM.render(<MyComponent/>, document.getElementById('test'))
+        /* 
+        执行ReactDOM.render(<MyComponent/>。。。
+            1.React解析组件标签，找到MyComponent组件。
+            2.发现组件是使用类定义的，随后new出来该类的实例，通过该实例调用类原型上的render方法
+            3.将render返回的虚拟DOM转为真实DOM，呈现在页面中
+        
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello react</title>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+        class Weather extends React.Component {
+            //构造器调用1次
+            constructor(props) {
+                super(props);
+                this.state = {isHot: true, wind: '微风'};
+                //解决changeWeather中this指向问题
+                //bind返回一个新函数，将实例原型链上的changeWeather方法内的this指向实例本身，返回新函数然后负值给实例
+                this.changeWeather = this.changeWeather.bind(this)
+            }
+            //render调用1+n次，n为状态更新次数
+            render() {
+                // console.log(this);
+                const {isHot, wind} = this.state
+                return <h1 onClick={this.changeWeather}>今天天气很{isHot? '炎热':'凉爽'}，{wind}</h1>
+            }
+            changeWeather() {
+                //由于changeWeather是作为onClick的回调，所以不是通过实例调用，是直接调用
+                //类中的方法默认开启了局部严格模式，所以changeWeather中的this为undefined
+                // console.log(this) //undefined
+
+                const isHot = this.state.isHot;
+                //状态必须通过setState更新，且是合并更新
+                this.setState({isHot: !isHot})
+
+                //严重注意，状态(state)不可直接更改
+                // this.state.isHot = !isHot;//错误的写法
+            }
+        }
+        ReactDOM.render(<Weather/>, document.getElementById('test'))
+        // function demo() {
+        //     console.log('标题被点击了')
+        // }
+    </script>
+</body>
+</html>
